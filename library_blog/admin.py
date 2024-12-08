@@ -1,3 +1,5 @@
 from django.contrib import admin
+from library_blog.models import BookModel
 
-# Register your models here.
+admin.site.register(BookModel)
+
