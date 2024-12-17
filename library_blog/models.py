@@ -39,3 +39,7 @@ class Review(models.Model):
 
     def __str__(self):
         return f'{self.book} - {self.stars}'
+
+    class Meta:
+        verbose_name = "Отзыв"
+        verbose_name_plural = "Отзывы"

@@ -28,6 +28,13 @@
             <p> {{ i.created_at }}:{{ i.text_review }} <strong>Оценка:</strong>{{ i.stars }}</p>
         </div>
         {% endfor %}
+
+         <h5>Добавить комментарий:</h5>
+        <form method="post">
+            {% csrf_token %}
+            {{ review_form.as_p }}
+            <button type="submit">Оставить комментарий</button>
+        </form>
     </div>
 </div>
 

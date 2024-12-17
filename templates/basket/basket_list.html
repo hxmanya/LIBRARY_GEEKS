@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Список заказов</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f4f6f9;
+            font-family: 'Arial', sans-serif;
+        }
+        .container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 1rem;
+        }
+        .order-list {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            padding: 1.5rem;
+        }
+        .order-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            border-bottom: 1px solid #e0e0e0;
+            transition: background-color 0.3s ease;
+        }
+        .order-item:hover {
+            background-color: #f8f9fa;
+        }
+        .order-details {
+            flex-grow: 1;
+            margin-right: 1rem;
+        }
+        .order-actions a {
+            margin-left: 0.5rem;
+            text-decoration: none;
+        }
+        .create-order-btn {
+            margin-top: 1rem;
+            width: 100%;
+        }
+        .order-name {
+            font-weight: bold;
+            color: #333;
+        }
+        .order-book {
+            color: #666;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center mb-4">Список заказов</h1>
+
+        <div class="order-list">
+            {% for basket in basket_list %}
+            <div class="order-item">
+                <div class="order-details">
+                    <div class="order-name">{{ basket.name }}</div>
+                    <div class="order-book">{{ basket.book }}</div>
+                </div>
+                <div class="order-actions">
+                    <a href="{% url 'basket_detail' basket.id %}" class="btn btn-info btn-sm">
+                        <i class="bi bi-eye"></i> Подробнее
+                    </a>
+                    <a href="{% url 'update_basket' basket.id %}" class="btn btn-warning btn-sm">
+                        <i class="bi bi-pencil"></i> Редактировать
+                    </a>
+                    <a href="{% url 'delete_basket' basket.id %}" class="btn btn-danger btn-sm">
+                        <i class="bi bi-trash"></i> Удалить
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+
+            {% if not basket_list %}
+            <div class="text-center text-muted py-4">
+                Список заказов пуст
+            </div>
+            {% endif %}
+        </div>
+
+        <a href="{% url 'create_basket' %}" class="btn btn-primary create-order-btn">
+            <i class="bi bi-plus-circle"></i> Создать заказ
+        </a>
+    </div>
+
+    <!-- Bootstrap JS and Popper.js (optional) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css" rel="stylesheet">
+</body>
+</html>

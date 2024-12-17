@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Редактировать заказ</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f4f6f9;
+            font-family: 'Arial', sans-serif;
+        }
+        .container {
+            max-width: 600px;
+            margin: 2rem auto;
+            padding: 1rem;
+        }
+        .order-edit-card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            padding: 2rem;
+        }
+        .form-title {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            color: #333;
+            font-weight: bold;
+        }
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        .form-group label {
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+            color: #495057;
+        }
+        .form-control {
+            border-radius: 4px;
+        }
+        .form-error {
+            color: #dc3545;
+            font-size: 0.9rem;
+            margin-top: 0.25rem;
+        }
+        .btn-submit {
+            width: 100%;
+            margin-top: 1rem;
+        }
+        .btn-back {
+            width: 100%;
+            margin-top: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="order-edit-card">
+            <h1 class="form-title">Редактировать заказ</h1>
+
+            <form method="post">
+                {% csrf_token %}
+
+                {% for field in form %}
+                <div class="form-group">
+                    <label for="{{ field.id_for_label }}" class="form-label">
+                        {{ field.label }}
+                    </label>
+                    {{ field }}
+                    {% if field.errors %}
+                        {% for error in field.errors %}
+                            <div class="form-error">{{ error }}</div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+                {% endfor %}
+
+                <button type="submit" class="btn btn-primary btn-submit">
+                    <i class="bi bi-save"></i> Сохранить изменения
+                </button>
+            </form>
+
+            <a href="{% url 'basket_list' %}" class="btn btn-secondary btn-back">
+                <i class="bi bi-arrow-left"></i> Вернуться к списку заказов
+            </a>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and Popper.js (optional) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css" rel="stylesheet">
+    <script>
+        // Enhanced form validation and styling
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.querySelector('form');
+            const inputs = form.querySelectorAll('input, select, textarea');
+
+            inputs.forEach(input => {
+                input.classList.add('form-control');
+
+                input.addEventListener('invalid', function() {
+                    this.classList.add('is-invalid');
+                });
+
+                input.addEventListener('input', function() {
+                    if (this.validity.valid) {
+                        this.classList.remove('is-invalid');
+                        this.classList.add('is-valid');
+                    } else {
+                        this.classList.remove('is-valid');
+                        this.classList.add('is-invalid');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

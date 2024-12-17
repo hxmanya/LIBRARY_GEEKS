@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'library_blog',
     'age_limit',
+    'basket',
 ]
 
 MIDDLEWARE = [

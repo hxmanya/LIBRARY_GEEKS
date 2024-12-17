@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Детали заказа</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f4f6f9;
+            font-family: 'Arial', sans-serif;
+        }
+        .container {
+            max-width: 600px;
+            margin: 2rem auto;
+            padding: 1rem;
+        }
+        .order-details-card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            padding: 2rem;
+        }
+        .order-details-title {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            color: #333;
+            font-weight: bold;
+        }
+        .order-detail-item {
+            margin-bottom: 1rem;
+            padding: 0.75rem;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+        }
+        .order-detail-label {
+            font-weight: bold;
+            color: #495057;
+            margin-right: 0.5rem;
+        }
+        .order-detail-value {
+            color: #212529;
+        }
+        .back-to-list-btn {
+            margin-top: 1.5rem;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="order-details-card">
+            <h1 class="order-details-title">Детали заказа</h1>
+
+            <div class="order-detail-item">
+                <span class="order-detail-label">Имя клиента:</span>
+                <span class="order-detail-value">{{ basket.name }}</span>
+            </div>
+
+            <div class="order-detail-item">
+                <span class="order-detail-label">Почта:</span>
+                <span class="order-detail-value">{{ basket.email }}</span>
+            </div>
+
+            <div class="order-detail-item">
+                <span class="order-detail-label">Номер телефона:</span>
+                <span class="order-detail-value">{{ basket.phone_number }}</span>
+            </div>
+
+            <div class="order-detail-item">
+                <span class="order-detail-label">Книга:</span>
+                <span class="order-detail-value">{{ basket.book }}</span>
+            </div>
+
+            <a href="{% url 'basket_list' %}" class="btn btn-primary back-to-list-btn">
+                <i class="bi bi-arrow-left"></i> Вернуться к списку заказов
+            </a>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and Popper.js (optional) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css" rel="stylesheet">
+</body>
+</html>
