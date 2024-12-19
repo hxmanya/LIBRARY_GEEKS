@@ -9,6 +9,24 @@ from .models import BookModel
 from .forms import ReviewForm
 
 
+class SearchView(generic.ListView):
+    template_name = "book.html"
+    context_object_name = "book_list"
+    paginate_by = 5
+
+    def get_queryset(self):
+        return models.BookModel.objects.filter(title__icontains=self.request.GET.get('q'))
+
+    def get_context_data(self, *args, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['q'] = self.request.GET.get('q')
+        return context
+
+
+
+
+
+
 class BookListView(generic.ListView):
     model = BookModel
     template_name = "book.html"
@@ -17,31 +35,31 @@ class BookListView(generic.ListView):
     def get_queryset(self):
         return BookModel.objects.all().order_by('-id')
 
-class BookDetailView(generic.DetailView):
-    template_name = "book_detail.html"
-    context_object_name = "book_detail"
-
-    def get_object(self, **kwargs):
-        return get_object_or_404(BookModel, id=self.kwargs.get("id"))
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["review_form"] = ReviewForm()
-        context["reviews"] = self.object.reviews.all()
-        return context
-
-    def post(self, request, *args, **kwargs):
-        self.object = self.get_object()
-        form = ReviewForm(request.POST)
-        if form.is_valid():
-            review = form.save(commit=False)
-            review.book = self.object
-            review.save()
-            return redirect(reverse("book_detail", kwargs={"id": self.object.id}))
-        else:
-            context = self.get_context_data()
-            context["review_form"] = form
-            return self.render_to_response(context)
+# class BookDetailView(generic.DetailView):
+#     template_name = "book_detail.html"
+#     context_object_name = "book_detail"
+#
+#     def get_object(self, **kwargs):
+#         return get_object_or_404(BookModel, id=self.kwargs.get("id"))
+#
+#     def get_context_data(self, *args, object_list=None, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         context["review_form"] = ReviewForm()
+#         context["reviews"] = self.object.reviews.all()
+#         return context
+#
+#     def post(self, request, *args, **kwargs):
+#         self.object = self.get_object()
+#         form = ReviewForm(request.POST)
+#         if form.is_valid():
+#             review = form.save(commit=False)
+#             review.book = self.object
+#             review.save()
+#             return redirect(reverse("book_detail", kwargs={"id": self.object.id}))
+#         else:
+#             context = self.get_context_data()
+#             context["review_form"] = form
+#             return self.render_to_response(context)
 
 # def book_list_view(request):
 #     if request.method == 'GET':
