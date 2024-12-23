@@ -1,0 +1,68 @@
+<ol class="book-list">
+  {% for i in mybook %}
+  <li class="book-item">
+    <article class="book-card">
+      <h2 class="book-title">{{ i.title }}</h2>
+      <p class="book-author">By {{ i.author }}</p>
+      <div class="book-description">{{ i.description }}</div>
+      <div class="book-rating">
+        Rating: <span class="rating-value">{{ i.rating }}</span>
+      </div>
+    </article>
+  </li>
+  {% endfor %}
+</ol>
+
+<style>
+  .book-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .book-item {
+    margin-bottom: 2rem;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 2rem;
+  }
+
+  .book-item:last-child {
+    border-bottom: none;
+  }
+
+  .book-card {
+    padding: 1.5rem;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .book-title {
+    font-size: 1.5rem;
+    color: #333;
+    margin: 0 0 0.5rem 0;
+  }
+
+  .book-author {
+    font-size: 1.1rem;
+    color: #666;
+    margin: 0 0 1rem 0;
+    font-style: italic;
+  }
+
+  .book-description {
+    color: #444;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+  }
+
+  .book-rating {
+    font-weight: 500;
+    color: #555;
+  }
+
+  .rating-value {
+    color: #2c5282;
+    font-weight: bold;
+  }
+</style>

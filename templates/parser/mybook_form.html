@@ -1,0 +1,93 @@
+<form method="POST" enctype="multipart/form-data" class="parsing-form">
+  {% csrf_token %}
+  <div class="form-container">
+    {{ form.as_p }}
+    <button type="submit" class="submit-button">
+      <span class="button-text">Начать Парсинг</span>
+    </button>
+  </div>
+</form>
+
+<style>
+  .parsing-form {
+    max-width: 600px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .form-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .parsing-form p {
+    margin: 0;
+  }
+
+  .parsing-form label {
+    display: block;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    color: #333;
+  }
+
+  .parsing-form input,
+  .parsing-form select,
+  .parsing-form textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+    transition: border-color 0.2s;
+  }
+
+  .parsing-form input:focus,
+  .parsing-form select:focus,
+  .parsing-form textarea:focus {
+    outline: none;
+    border-color: #4a90e2;
+    box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.1);
+  }
+
+  .submit-button {
+    background-color: #4a90e2;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    width: auto;
+    align-self: flex-start;
+  }
+
+  .submit-button:hover {
+    background-color: #357abd;
+  }
+
+  .submit-button:active {
+    background-color: #2d6da3;
+  }
+
+  /* Error states */
+  .parsing-form .errorlist {
+    color: #dc3545;
+    list-style: none;
+    padding: 0;
+    margin: 0.5rem 0 0 0;
+    font-size: 0.875rem;
+  }
+
+  .parsing-form .error input,
+  .parsing-form .error select,
+  .parsing-form .error textarea {
+    border-color: #dc3545;
+  }
+</style>
