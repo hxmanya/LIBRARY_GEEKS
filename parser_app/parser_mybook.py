@@ -43,4 +43,4 @@ def parsing():
     else:
         raise Exception("error")
 
-print(parsing())
+
