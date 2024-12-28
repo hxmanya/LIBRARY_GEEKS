@@ -1,3 +1,10 @@
+from django.views.decorators.cache import cache_page
+from django.utils.decorators import method_decorator
+from django.db.models.signals import post_save, post_delete
+from django.dispatch import receiver
+from django.core.cache import cache
+
+
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Basket
 from .forms import BasketForm
@@ -23,13 +30,18 @@ class CreateBasketView(generic.CreateView):
 #         form = BasketForm()
 #     return render(request, 'basket/create_basket.html', context={'form': form})
 
+@method_decorator(cache_page(60 * 15), name='dispatch')
 class BasketListView(generic.ListView):
     template_name = 'basket/basket_list.html'
     context_object_name = 'basket_list'
     model = Basket
 
     def get_queryset(self):
-        return self.model.objects.all().order_by('-id')
+        basket = cache.get('basket')
+        if not basket:
+            basket = self.model.objects.all().order_by('-id')
+            cache.set('basket', basket, 60*15)
+        return basket
 
 
 
@@ -97,3 +109,6 @@ class DeleteBasketView(generic.DeleteView):
 #         basket.delete()
 #         return redirect('basket_list')
 #     return render(request, 'basket/delete_basket.html', context={'basket': basket})
+
+def clear_todo_cache(sender, **kwargs):
+    cache.delete('basket')
