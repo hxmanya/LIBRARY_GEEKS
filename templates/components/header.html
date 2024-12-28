@@ -44,6 +44,9 @@
                 <li class="nav-item">
                     <a class="nav-link enable" href="{% url 'mybook_list' %}" style="color: yellow;">Другие книги</a>
                 </li>
+                 <li class="nav-item">
+                    <a class="nav-link enable" href="{% url 'recipe_list' %}" style="color: yellow;">Рецепты</a>
+                </li>
             </ul>
             <form action="{% url 'search' %}" method="GET" class="d-flex" role="search">
                 <input class="form-control me-2"type="text" name="q" type="search" placeholder="Поиск" aria-label="Поиск">

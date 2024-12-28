@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ collection.name }}{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col">
+        <h1>{{ collection.name }}</h1>
+    </div>
+</div>
+
+<div class="row">
+    {% for recipe in collection.recipes.all %}
+    <div class="col-md-6 mb-4">
+        <div class="recipe-card">
+            <h2 class="h4">{{ recipe.title }}</h2>
+            <p class="text-muted">{{ recipe.description|truncatewords:30 }}</p>
+            <a href="{% url 'recipe_detail' recipe.id %}" class="btn btn-info">Просмотреть</a>
+        </div>
+    </div>
+    {% empty %}
+    <div class="col-12">
+        <div class="alert alert-info">
+            В этой коллекции пока нет рецептов.
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

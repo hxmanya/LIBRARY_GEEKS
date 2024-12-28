@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{% if form.instance.pk %}Редактирование коллекции{% else %}Новая коллекция{% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <nav aria-label="breadcrumb" class="mt-3">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'collection_list' %}">Коллекции</a></li>
+            <li class="breadcrumb-item active">
+                {% if form.instance.pk %}Редактирование коллекции{% else %}Новая коллекция{% endif %}
+            </li>
+        </ol>
+    </nav>
+
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card">
+                <div class="card-header">
+                    <h1 class="h4 mb-0">
+                        {% if form.instance.pk %}
+                        Редактирование коллекции
+                        {% else %}
+                        Создание новой коллекции
+                        {% endif %}
+                    </h1>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+
+                        <!-- Название коллекции -->
+                        <div class="mb-3">
+                            <label for="{{ form.name.id_for_label }}" class="form-label">
+                                {{ form.name.label }}
+                            </label>
+                            {{ form.name }}
+                            {% if form.name.errors %}
+                            <div class="text-danger">
+                                {% for error in form.name.errors %}
+                                <small>{{ error }}</small>
+                                {% endfor %}
+                            </div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Выбор рецептов -->
+                        <div class="mb-3">
+                            <label for="{{ form.recipes.id_for_label }}" class="form-label">
+                                {{ form.recipes.label }}
+                            </label>
+                            <div class="card">
+                                <div class="card-body" style="max-height: 300px; overflow-y: auto;">
+                                    {% for value, label in form.recipes.field.choices %}
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox"
+                                               name="{{ form.recipes.name }}" value="{{ value }}"
+                                               id="recipe_{{ value }}"
+                                               {% if value in form.recipes.value %}checked{% endif %}>
+                                        <label class="form-check-label" for="recipe_{{ value }}">
+                                            {{ label }}
+                                        </label>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            {% if form.recipes.errors %}
+                            <div class="text-danger">
+                                {% for error in form.recipes.errors %}
+                                <small>{{ error }}</small>
+                                {% endfor %}
+                            </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <a href="{% url 'collection_list' %}" class="btn btn-secondary me-md-2">
+                                Отмена
+                            </a>
+                            <button type="submit" class="btn btn-primary">
+                                {% if form.instance.pk %}
+                                Сохранить изменения
+                                {% else %}
+                                Создать коллекцию
+                                {% endif %}
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

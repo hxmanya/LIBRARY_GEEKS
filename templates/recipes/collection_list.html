@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %}Коллекции рецептов{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-md-8">
+        <h1>Коллекции рецептов</h1>
+    </div>
+    <div class="col-md-4 text-end">
+        <a href="{% url 'collection_create' %}" class="btn btn-primary">Создать коллекцию</a>
+    </div>
+</div>
+
+<div class="row">
+    {% for collection in collections %}
+    <div class="col-md-4 mb-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">{{ collection.name }}</h5>
+                <p class="card-text">
+                    <small class="text-muted">
+                        Рецептов в коллекции: {{ collection.recipes.count }}
+                    </small>
+                </p>
+                <a href="{% url 'collection_detail' collection.pk %}"
+                   class="btn btn-info">Просмотреть</a>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="col-12">
+        <div class="alert alert-info">
+            Коллекций пока нет. <a href="{% url 'collection_create' %}">Создайте первую коллекцию</a>.
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

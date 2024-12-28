@@ -11,6 +11,7 @@ urlpatterns = [
     path('', include('basket.urls')),
     path('', include('parser_app.urls')),
     path('', include('users.urls')),
+    path('', include('recipes.urls')),
 
 ]
 
